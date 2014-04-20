@@ -3,14 +3,27 @@
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
-       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+
+  <bean id="handlerMapping" class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+    <property name="alwaysUseFullPath" value="true" />
+  </bean>
 
   <!-- Turns on support for mapping requests to Spring MVC @Controller methods -->
-  <mvc:annotation-driven />
+  <mvc:annotation-driven>
+    <mvc:message-converters register-defaults="true">
+      <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="objectMapper">
+          <bean class="com.alexshabanov.board.config.JacksonMapperCreator" factory-method="createMapper" />
+        </property>
+      </bean>
+    </mvc:message-converters>
+  </mvc:annotation-driven>
 
   <!-- Controllers -->
   <bean class="com.alexshabanov.board.controller.PublicController" />
+  <bean class="com.alexshabanov.board.controller.rest.PostRestController" />
 
   <!--Installs application converters and formatters-->
   <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">

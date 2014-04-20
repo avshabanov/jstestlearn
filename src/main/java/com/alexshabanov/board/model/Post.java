@@ -1,8 +1,10 @@
 package com.alexshabanov.board.model;
 
-public final class Post {
-  private String title;
-  private String content;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public final class Post extends DomainObject {
+  @JsonProperty("t") private String title;
+  @JsonProperty("c") private String content;
 
   // serialization
   public Post() {
@@ -20,15 +22,5 @@ public final class Post {
 
   public String getContent() {
     return content;
-  }
-
-  @Override
-  public String toString() {
-    final StringBuilder sb = new StringBuilder();
-    sb.append("Hello");
-    sb.append("{greeting='").append(getTitle()).append('\'');
-    sb.append(", origin='").append(getContent()).append('\'');
-    sb.append('}');
-    return sb.toString();
   }
 }

@@ -11,7 +11,9 @@ nodejs with npm v >= 0.8
 
 ## Start
 
-mvn clean install
+```
+mvn jetty:run -Pjetty-local
+```
 
 ## Tags
 

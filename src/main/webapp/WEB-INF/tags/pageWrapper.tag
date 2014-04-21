@@ -14,9 +14,5 @@
 </head>
 <body>
 <jsp:doBody/>
-<%-- Scripts --%>
-<script type="text/javascript" src="<c:url value="/static/js/vendor/jquery-2.1.0.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/static/js/vendor/bootstrap-3.1.1.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/static/js/app/ns.js"/>"></script>
 </body>
 </html>

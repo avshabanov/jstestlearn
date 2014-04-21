@@ -1,2 +1,5 @@
 
-var app = {};
+var app = {
+  view: {},
+  model: {}
+};

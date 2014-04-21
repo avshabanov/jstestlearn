@@ -19,6 +19,12 @@
     <param-value>classpath:spring/root-config.xml</param-value>
   </context-param>
 
+  <!-- jetty: disable appending jsessionid to the URLs -->
+  <context-param>
+    <param-name>org.eclipse.jetty.servlet.SessionIdPathParameterName</param-name>
+    <param-value>none</param-value>
+  </context-param>
+
   <!-- Filters -->
   <filter>
     <filter-name>characterEncodingFilter</filter-name>

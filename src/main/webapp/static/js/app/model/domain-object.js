@@ -1,5 +1,9 @@
 /**
- * Declares base domain object
+ * Declares base domain object.
+ * Minimalistic backbone-alike definition of the domain objects without bells and whistles.
+ * Oriented to REST API with "shortened" field names.
+ *
+ * @author Alexander Shabanov
  */
 (function (model) {
   function defineDomainObject(domainNamespace, objectName, mapping) {

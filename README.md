@@ -11,8 +11,16 @@ maven
 
 ## Start
 
+In Jetty:
+
 ```
 mvn jetty:run -Pjetty-local
+```
+
+In Tomcat:
+
+```
+mvn tomcat7:run -Ptomcat-local
 ```
 
 ### Testing with curl

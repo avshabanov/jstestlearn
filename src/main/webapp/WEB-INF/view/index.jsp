@@ -8,11 +8,7 @@
     <div class="panel-body">
       <p><span class="glyphicon glyphicon-asterisk"></span> Hello there!</p>
       <hr/>
-      <ul>
-        <li>
-          <h3 class="title"></h3>
-          <p class="content"></p>
-        </li>
+      <ul id="work-items">
       </ul>
     </div>
   </div>

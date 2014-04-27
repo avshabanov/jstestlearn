@@ -61,8 +61,8 @@
 <tag:commonScripts/>
 
 <%-- Views --%>
-<script type="text/javascript" src="<c:url value="/static/js/app/view/post-item-view.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/static/js/app/view/add-post-view.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/static/app/js/view/post-item-view.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/static/app/js/view/add-post-view.js"/>"></script>
 <%-- Entry Point --%>
-<script type="text/javascript" src="<c:url value="/static/js/app/entry-point.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/static/app/js/entry-point.js"/>"></script>
 </tag:pageWrapper>

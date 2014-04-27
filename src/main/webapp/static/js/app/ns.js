@@ -1,5 +1,9 @@
 
 var app = {
+  // imported library: jquery
+  $: jQuery,
+
   view: {},
-  model: {}
+  model: {},
+  util: {}
 };

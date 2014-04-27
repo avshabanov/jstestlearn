@@ -5,8 +5,14 @@
  *
  * @author Alexander Shabanov
  */
-(function (model) {
-  function defineDomainObject(domainNamespace, objectName, mapping) {
+
+module(["model"], function (model) {
+
+  function DomainObject(options) {
+  }
+
+
+  DomainObject.define = function DomainObject_define(domainNamespace, objectName, mapping) {
     var parameterMapping = mapping.parameters;
 
     // prepare keys
@@ -63,5 +69,9 @@
     }
   }
 
-  model.defineDomainObject = defineDomainObject;
-} (app.model));
+  //
+  // Export
+  //
+
+  model.DomainObject = DomainObject;
+});

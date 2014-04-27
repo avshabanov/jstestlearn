@@ -1,11 +1,11 @@
 /**
  * Declares post model
  */
-(function (model) {
-  model.defineDomainObject(app.model, "Post", {
+module(["model"], function (model) {
+  model.DomainObject.define(model, "Post", {
     parameters: {
       "t": "title",
       "c": "content"
     }
   });
-} (app.model));
+});

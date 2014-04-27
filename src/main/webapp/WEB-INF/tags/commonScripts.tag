@@ -9,9 +9,7 @@
 <script type="text/javascript" src="<c:url value="/static/app/js/ns.js"/>"></script>
 
 <%-- Vendor Scripts --%>
-<script type="text/javascript" src="<c:url value="/static/carpe-0.8.0/js/module.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/static/carpe-0.8.0/js/domain-object.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/static/carpe-0.8.0/js/view.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/static/carpe-0.8.0/js/carpe.js"/>"></script>
 
 <%-- Model --%>
 <script type="text/javascript" src="<c:url value="/static/app/js/model/post.js"/>"></script>

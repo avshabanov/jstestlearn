@@ -4,17 +4,16 @@ module(["view", "model", "$"], function (view, model, $) {
   function produceAddNewPostNotification() {
     var $notification = $($("#success-notification-template").text());
     $("#post-notifications").append($notification);
-    $notification.delay(1000).fadeOut(500, function () {
+    $notification.delay(1000).fadeOut(300, function () {
       $notification.remove();
     });
   }
 
   function produceAddNewPost() {
     var $postList = $("#post-list");
-    return function addNewPost(postPayload) {
-      var post = new model.Post({payload: postPayload});
+    return function addNewPost(post) {
       var postItemView = new view.PostItemView({model: post});
-      postItemView.appendTo($postList);
+      postItemView.prependTo($postList);
     }
   }
 
@@ -28,7 +27,7 @@ module(["view", "model", "$"], function (view, model, $) {
 
     var addSamplePosts = function (notify) {
       $.each(samplePosts, function (_, payload) {
-        addNewPost(payload);
+        addNewPost(new model.Post({payload: payload}));
       });
 
       if (!notify) {
@@ -41,6 +40,13 @@ module(["view", "model", "$"], function (view, model, $) {
     $("#add-sample-posts").click(function () { addSamplePosts(true); });
 
     addSamplePosts(false);
+
+    var addPostView = new view.AddPostView();
+    addPostView.create();
+    addPostView.onSubmitPost = function (post) {
+      addNewPost(post);
+      produceAddNewPostNotification();
+    };
   });
 });
 

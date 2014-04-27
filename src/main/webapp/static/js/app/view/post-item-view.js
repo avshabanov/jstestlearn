@@ -1,5 +1,5 @@
 /**
- * Declares post view model
+ * Declares post item view
  */
 module(["view"], function (view) {
   view.PostItemView = view.View.extend({

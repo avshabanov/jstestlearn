@@ -4,15 +4,20 @@
  * @author Alexander Shabanov
  */
 module(["view", "$"], function (view, $) {
-  function View(_createView) {
-    this._createView = _createView;
+  function View(create) {
+    this.create = create;
     this.ui = {};
   }
 
+  View.prototype.prependTo = function ($target) {
+    this.create();
+    $target.prepend(this.$el);
+    return this;
+  }
+
   View.prototype.appendTo = function ($target) {
-    this.$el = this._createView();
+    this.create();
     $target.append(this.$el);
-    this.onRender();
     return this;
   }
 
@@ -24,10 +29,20 @@ module(["view", "$"], function (view, $) {
     this.$el.remove();
   }
 
-  function makeCreateViewFn(template, ui, events) {
-    var $template = $(template);
-    if ($template.size() !== 1) {
-      throw new Error("one template expected, got " + $template + " for " + template);
+  function makeCreateViewFn(template, el, ui, events) {
+    var $template;
+    var $elem;
+    if (el) {
+      $elem = $(el);
+      if ($elem.size() === 0) {
+        throw new Error("There is no element associated with selector " + el);
+      }
+    }
+    if (!$elem) {
+      var $template = $(template);
+      if ($template.size() !== 1) {
+        throw new Error("one template expected, got " + $template + " for " + template);
+      }
     }
 
     var eventBinderFns = []; // event binder functions
@@ -38,21 +53,19 @@ module(["view", "$"], function (view, $) {
       eventBinderFns.push(function () {
         var self = this;
         var el = (selector ? $(selector, this.$el): this.$el);
-        this.$el.on(event, function () {
+        el.on(event, function () {
           return self[handler].apply(self, arguments);
         });
       });
     });
 
     return function createView() {
-      var $el = $($template.text());
+      this.$el = $elem || $($template.text());
 
       // activate ui
       for (var e in ui) {
         if (!ui.hasOwnProperty(e)) { continue; }
-
-        this.$el = $el;
-        this.ui[e] = $(ui[e], $el);
+        this.ui[e] = $(ui[e], this.$el);
       }
 
       // bind events
@@ -61,7 +74,8 @@ module(["view", "$"], function (view, $) {
         eventBinderFns[e].call(this);
       }
 
-      return $el;
+      this.onRender();
+      return this;
     };
   }
 
@@ -75,7 +89,7 @@ module(["view", "$"], function (view, $) {
     }, viewOptions); // safe copy with defaults
 
     // make 'create view' lambda
-    var createView = makeCreateViewFn(viewOptions.template, viewOptions.ui, viewOptions.events);
+    var createView = makeCreateViewFn(viewOptions.template, viewOptions.el, viewOptions.ui, viewOptions.events);
 
     // return view object
     var newViewClass = function (options) {

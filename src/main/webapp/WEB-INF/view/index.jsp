@@ -20,7 +20,7 @@
       </ul>
     </div>
   </div>
-  <div class="panel panel-default">
+  <div id="new-post-form" class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">New Post</h3>
     </div>
@@ -32,7 +32,7 @@
         <textarea type="memo" class="content form-control" placeholder="Content"></textarea>
       </div>
       <div class="form-group">
-      <button class="btn btn-primary">Submit New Post</button>
+      <button class="submit-post-btn btn btn-primary">Submit New Post</button>
       </div>
     </div>
   </div>
@@ -62,6 +62,7 @@
 
 <%-- Views --%>
 <script type="text/javascript" src="<c:url value="/static/js/app/view/post-item-view.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/static/js/app/view/add-post-view.js"/>"></script>
 <%-- Entry Point --%>
 <script type="text/javascript" src="<c:url value="/static/js/app/entry-point.js"/>"></script>
 </tag:pageWrapper>

@@ -1,10 +1,16 @@
-/*
- * Simple module definition library
+/**
+ * Simple module definition library.
  *
- * (C) Alexander Shabanov
- * 2014
+ * Sample usage:
+ * <pre>
+ * module(["view", "model.core", "model.account"], function (view, modelCore, modelAccount) {
+ *   var myView = view.MyView(new modelAccount.UserAccount(new modelCore.Money(100), "bob"));
+ *   // ...
+ * });
+ * </pre>
+ *
+ * @author Alexander Shabanov
  */
-
 window.module = (function () {
 
   /* module root */

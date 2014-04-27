@@ -1,15 +1,16 @@
 /**
  * Declares application's template manager
  */
-module(["view", "$"], function (model, $) {
+module(["view", "$"], function (view, $) {
   function View(_createView) {
     this._createView = _createView;
+    this.ui = {};
   }
 
   View.prototype.appendTo = function ($target) {
-    var $el = this._createView();
-
-    $target.append($el);
+    this.$el = this._createView();
+    $target.append(this.$el);
+    this.onRender();
     return this;
   }
 
@@ -50,7 +51,7 @@ module(["view", "$"], function (model, $) {
 
     // return view object
     var newViewClass = function () {
-      View.apply(this, createView);
+      View.call(this, createView);
     };
     if (typeof viewOptions.name !== "undefined") {
       newViewClass.name = viewOptions.name;
@@ -60,7 +61,7 @@ module(["view", "$"], function (model, $) {
     // copy member functions - except for 'ui', 'template'
     delete viewOptions.ui;
     delete viewOptions.template;
-    for (var memberName : viewOptions) {
+    for (var memberName in viewOptions) {
       if (viewOptions.hasOwnProperty(memberName)) {
         newViewClass.prototype[memberName] = viewOptions[memberName];
       }

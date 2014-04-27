@@ -2,22 +2,46 @@
 <%@ taglib prefix="tag" tagdir="/WEB-INF/tags" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 
-<tag:pageWrapper title="JSTestLearn &raquo; Main">
+<tag:pageWrapper title="JSTestLearn &raquo; Posts">
 <div class="inlet">
   <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <button id="add-sample-posts">Add Sample Posts</button>
+      </div>
+      <h3 class="panel-title">Post List</h3>
+    </div>
     <div class="panel-body">
-      <p><span class="glyphicon glyphicon-asterisk"></span> Hello there!</p>
-      <hr/>
-      <ul id="work-items">
+      <ul id="post-list" class="list-unstyled">
       </ul>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">New Post</h3>
+    </div>
+    <div class="panel-body">
+      <p>TODO</p>
     </div>
   </div>
 </div>
 
+<script id="success-notification-template" type="text/template">
+  <div class="alert alert-success alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>OK!</strong> New post has been added.
+  </div>
+</script>
+
 <script id="publication-item-template" type="text/template">
   <li>
-    <h3 class="title"></h3>
-    <p class="content"></p>
+    <div>
+      <div class="post-controls">
+        <button class="delete">Delete</button>
+      </div>
+      <h3 class="title"></h3>
+      <p class="content"></p>
+    </div>
   </li>
 </script>
 

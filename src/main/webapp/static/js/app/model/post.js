@@ -4,8 +4,8 @@
 module(["model"], function (model) {
   model.DomainObject.define(model, "Post", {
     parameters: {
-      "t": "title",
-      "c": "content"
+      "title": "t",
+      "content": "c"
     }
   });
 });

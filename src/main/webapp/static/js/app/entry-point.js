@@ -7,13 +7,21 @@ module(["view", "model", "$"], function (view, model, $) {
       {t: "Second Post", c: "Second Post Content: Lorem Ipsum..."}
     ];
 
-    var $workItems = $("#work-items");
+    var $postList = $("#post-list");
 
-    $.each(samplePosts, function (k, v) {
-      var post = new model.Post({payload: v});
-      var postItemView = new view.PostItemView({model: post});
-      postItemView.appendTo($workItems);
-    });
+    var addSamplePosts = function () {
+      $.each(samplePosts, function (k, v) {
+        var post = new model.Post({payload: v});
+        var postItemView = new view.PostItemView({model: post});
+        postItemView.appendTo($postList);
+      });
+
+
+    };
+
+    $("#add-sample-posts").click(addSamplePosts);
+
+    addSamplePosts();
   });
 });
 

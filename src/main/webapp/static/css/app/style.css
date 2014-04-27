@@ -3,3 +3,9 @@
 .inlet {
   padding: 24px;
 }
+
+.post-controls {
+  float: right;
+  overflow: hidden;
+}
+

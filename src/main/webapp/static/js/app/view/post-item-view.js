@@ -13,6 +13,14 @@ module(["view"], function (view) {
     onRender: function () {
       this.ui.title.text(this.model.getTitle());
       this.ui.content.text(this.model.getContent());
+    },
+
+    deletePost: function () {
+      this.remove();
+    },
+
+    events: {
+      "click .delete": "deletePost"
     }
   });
 });

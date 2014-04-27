@@ -5,64 +5,71 @@
  *
  * @author Alexander Shabanov
  */
-
 module(["model"], function (model) {
 
   function DomainObject(options) {
   }
 
+  function createCtorFn(fieldToPayloadKeys, payloadToFieldKeys) {
+    // create object constructor
+    return function (options) {
+      if (!options) {
+        return;
+      }
+
+      // init-by-payload
+      if (typeof(options.payload) !== "undefined") {
+        for (var payloadKey in payloadToFieldKeys) {
+          if (payloadKey in options.payload) {
+            this[payloadKey] = options.payload[payloadKey];
+          }
+        }
+      }
+
+      // init-by-model
+      if (typeof(options.model) !== "undefined") {
+        for (var fieldKey in fieldToPayloadKeys) {
+          if (fieldKey in options.model) {
+            this[fieldToPayloadKeys[fieldKey]] = options.model[fieldKey];
+          }
+        }
+      }
+    };
+  }
 
   DomainObject.define = function DomainObject_define(domainNamespace, objectName, mapping) {
     var parameterMapping = mapping.parameters;
 
     // prepare keys
-    var keys = [];
+    var fieldToPayloadKeys = {};
+    var payloadToFieldKeys = {};
     for (var key in parameterMapping) {
       if (parameterMapping.hasOwnProperty(key)) {
-        keys.push(key);
+        var payloadKey = parameterMapping[key];
+        fieldToPayloadKeys[key] = payloadKey;
+        payloadToFieldKeys[payloadKey] = key;
       }
     }
 
-    var ctor = function (options) {
-      options = options || {};
-      var payload = options.payload || {};
-      var optModel = options.model || {};
-      for (var i = 0; i < keys.length; ++i) {
-        var key = keys[i];
-        // initialize by payload name
-        if (key in payload) {
-          this[key] = payload[key];
-        }
-        // initialize by parameter name
-        var parameterName = parameterMapping[key];
-        if (parameterName in optModel) {
-          this[key] = optModel[parameterName];
-        }
-      }
-    }
+    var ctor = createCtorFn(fieldToPayloadKeys, payloadToFieldKeys);
     ctor.name = objectName;
     domainNamespace[objectName] = ctor;
 
     // initialize getters
-    for (var i = 0; i < keys.length; ++i) {
-      var key = keys[i];
-      var parameterName = parameterMapping[key];
+    for (var fieldKey in fieldToPayloadKeys) {
+      var payloadKey = fieldToPayloadKeys[fieldKey];
 
       // Create getter name, i.e. title => getTitle
-      var getterName = "get" + parameterName.charAt(0).toUpperCase() + parameterName.substring(1);
-      var getterFn = (function (key) {
-        return function (options) {
-          if (this.hasOwnProperty(key)) {
-          return this[key];
+      var getterName = "get" + fieldKey.charAt(0).toUpperCase() + fieldKey.substring(1);
+      var getterFn = (function (payloadKey) {
+        return function (defaultValue) {
+          if (this.hasOwnProperty(payloadKey)) {
+            return this[payloadKey];
           }
 
-          if (options && typeof options.defaultValue != "undefined") {
-            return options.defaultValue;
-          }
-
-          return undefined;
+          return defaultValue;
         };
-      } (key));
+      } (payloadKey));
 
       getterFn.name = getterName;
       ctor.prototype[getterName] = getterFn;

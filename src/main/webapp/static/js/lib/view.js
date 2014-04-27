@@ -1,5 +1,7 @@
 /**
- * Declares application's template manager
+ * Simple Marionette-alike template-based view.
+ *
+ * @author Alexander Shabanov
  */
 module(["view", "$"], function (view, $) {
   function View(_createView) {
@@ -18,22 +20,47 @@ module(["view", "$"], function (view, $) {
     // do nothing
   }
 
-  function makeCreateViewFn(template, ui) {
+  View.prototype.remove = function () {
+    this.$el.remove();
+  }
+
+  function makeCreateViewFn(template, ui, events) {
     var $template = $(template);
     if ($template.size() !== 1) {
       throw new Error("one template expected, got " + $template + " for " + template);
     }
 
+    var eventBinderFns = []; // event binder functions
+    $.each(events, function (event, handler) {
+      var selectorIndex = event.indexOf(" ") + 1;
+      var selector = (selectorIndex > 0 ? event.substring(selectorIndex) : undefined);
+      event = (selectorIndex > 0 ? event.substring(0, selectorIndex - 1) : event);
+      eventBinderFns.push(function () {
+        var self = this;
+        var el = (selector ? $(selector, this.$el): this.$el);
+        this.$el.on(event, function () {
+          return self[handler].apply(self, arguments);
+        });
+      });
+    });
+
     return function createView() {
       var $el = $($template.text());
+
+      // activate ui
       for (var e in ui) {
-        if (!ui.hasOwnProperty(e)) {
-          continue;
-        }
+        if (!ui.hasOwnProperty(e)) { continue; }
 
         this.$el = $el;
         this.ui[e] = $(ui[e], $el);
       }
+
+      // bind events
+      for (var e in eventBinderFns) {
+        if (!eventBinderFns.hasOwnProperty(e)) { continue; }
+        eventBinderFns[e].call(this);
+      }
+
       return $el;
     };
   }
@@ -43,11 +70,12 @@ module(["view", "$"], function (view, $) {
       throw new Error("options argument is not an object");
     }
     viewOptions = $.extend({
-      ui: {}
+      ui: {},
+      events: {}
     }, viewOptions); // safe copy with defaults
 
     // make 'create view' lambda
-    var createView = makeCreateViewFn(viewOptions.template, viewOptions.ui);
+    var createView = makeCreateViewFn(viewOptions.template, viewOptions.ui, viewOptions.events);
 
     // return view object
     var newViewClass = function (options) {
@@ -64,6 +92,7 @@ module(["view", "$"], function (view, $) {
 
     // copy member functions - except for 'ui', 'template'
     delete viewOptions.ui;
+    delete viewOptions.events;
     delete viewOptions.template;
     for (var memberName in viewOptions) {
       if (viewOptions.hasOwnProperty(memberName)) {

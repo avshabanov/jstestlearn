@@ -12,6 +12,13 @@ describe("app.model.Post", function () {
     expect(post.getTitle()).toEqual(title);
   });
 
+  it("should get optional title and content", function () {
+    var post = new model.Post();
+    var defaultVal = 5;
+    expect(post.getTitle(defaultVal)).toEqual(defaultVal);
+    expect(post.getContent()).toBeUndefined();
+  });
+
   it("should get content", function () {
     expect(post.getContent()).toEqual(content);
   });
@@ -21,6 +28,6 @@ describe("app.model.Post", function () {
   });
 
   it("should deserialize payload", function () {
-      expect(new model.Post({payload: {"t": title, "c": content}})).toEqual(post);
-    });
+    expect(new model.Post({payload: {"t": title, "c": content}})).toEqual(post);
+  });
 });

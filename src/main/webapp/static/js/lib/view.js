@@ -50,8 +50,12 @@ module(["view", "$"], function (view, $) {
     var createView = makeCreateViewFn(viewOptions.template, viewOptions.ui);
 
     // return view object
-    var newViewClass = function () {
+    var newViewClass = function (options) {
+      options = options || {};
       View.call(this, createView);
+      if (typeof options.model !== "undefined") {
+        this.model = options.model;
+      }
     };
     if (typeof viewOptions.name !== "undefined") {
       newViewClass.name = viewOptions.name;

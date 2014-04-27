@@ -2,22 +2,18 @@
 module(["view", "model", "$"], function (view, model, $) {
 
   $(document).ready(function () {
-    var ItemView = view.View.extend({
-      template: "#publication-item-template",
+    var samplePosts = [
+      {t: "First Post", c: "My Post Content"},
+      {t: "Second Post", c: "Second Post Content: Lorem Ipsum..."}
+    ];
 
-      ui: {
-        content: ".content",
-        title: ".title"
-      },
+    var $workItems = $("#work-items");
 
-      onRender: function () {
-        this.ui.title.text("Lorem ipsum");
-        this.ui.content.text("Lorem ipsum");
-      }
+    $.each(samplePosts, function (k, v) {
+      var post = new model.Post({payload: v});
+      var postItemView = new view.PostItemView({model: post});
+      postItemView.appendTo($workItems);
     });
-
-    var itemView = new ItemView();
-    itemView.appendTo($("#work-items"));
   });
 });
 

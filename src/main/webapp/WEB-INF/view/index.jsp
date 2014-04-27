@@ -22,7 +22,10 @@
 </script>
 
 <%-- Scripts --%>
-<tag:vendorScripts/>
-<tag:commonAppScripts/>
+<tag:commonScripts/>
+
+<%-- Views --%>
+<script type="text/javascript" src="<c:url value="/static/js/app/view/post-item-view.js"/>"></script>
+<%-- Entry Point --%>
 <script type="text/javascript" src="<c:url value="/static/js/app/entry-point.js"/>"></script>
 </tag:pageWrapper>

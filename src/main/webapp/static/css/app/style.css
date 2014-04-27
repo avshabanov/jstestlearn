@@ -4,8 +4,6 @@
   padding: 24px;
 }
 
-.post-controls {
-  float: right;
-  overflow: hidden;
+.post-container-heading-wrapper {
+  height: 2em;
 }
-

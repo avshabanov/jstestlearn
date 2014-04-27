@@ -6,12 +6,16 @@
 <div class="inlet">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <div class="pull-right">
-        <button id="add-sample-posts">Add Sample Posts</button>
+      <div class="post-container-heading-wrapper">
+        <div class="pull-right">
+          <button id="add-sample-posts" class="btn btn-default btn-sm">Add Sample Posts</button>
+        </div>
+        <h3 class="panel-title">Post List</h3>
       </div>
-      <h3 class="panel-title">Post List</h3>
     </div>
     <div class="panel-body">
+      <div id="post-notifications">
+      </div>
       <ul id="post-list" class="list-unstyled">
       </ul>
     </div>
@@ -21,7 +25,15 @@
       <h3 class="panel-title">New Post</h3>
     </div>
     <div class="panel-body">
-      <p>TODO</p>
+      <div class="form-group">
+        <input type="text" class="title form-control" placeholder="Title"/>
+      </div>
+      <div class="form-group">
+        <textarea type="memo" class="content form-control" placeholder="Content"></textarea>
+      </div>
+      <div class="form-group">
+      <button class="btn btn-primary">Submit New Post</button>
+      </div>
     </div>
   </div>
 </div>
@@ -36,8 +48,8 @@
 <script id="publication-item-template" type="text/template">
   <li>
     <div>
-      <div class="post-controls">
-        <button class="delete">Delete</button>
+      <div class="pull-right">
+        <button class="btn btn-danger delete">Delete</button>
       </div>
       <h3 class="title"></h3>
       <p class="content"></p>

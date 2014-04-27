@@ -16,7 +16,10 @@ module(["view"], function (view) {
     },
 
     deletePost: function () {
-      this.remove();
+      var self = this;
+      this.$el.fadeOut(300, function () {
+        self.remove();
+      });
     },
 
     events: {
